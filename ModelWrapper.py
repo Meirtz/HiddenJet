@@ -12,8 +12,8 @@ class ModelWrapper:
         """
         self.model = model
         self.model.eval()  # Ensure the model is in evaluation mode
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.device)
+        # self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # self.model.to(self.device)
 
     def extract_hidden_states(self, inputs, layer_indices, return_tensors="pt"):
         """
@@ -31,7 +31,7 @@ class ModelWrapper:
         self.model.config.output_hidden_states = True
 
         # Move inputs to the same device as the model
-        inputs = {k: v.to(self.device) for k, v in inputs.items()}
+        inputs = {k: v for k, v in inputs.items()}
 
         with torch.no_grad():
             outputs = self.model(**inputs)
